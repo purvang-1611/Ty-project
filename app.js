@@ -14,6 +14,8 @@ var updatewithemployeeprofile=require('./routes/updateEmployeeProfile');
 var items=require('./routes/item_route');
 var deleteallitems=require('./routes/deleteAllItem_route');
 var stock=require('./routes/stock_route');
+var items1=require('./routes/item1_route');
+var getstockbyin=require('./routes/GetstockByin_route');
 var app = express();
 
 // view engine setup
@@ -36,8 +38,10 @@ app.use('/employee',employee);
 app.use('/employee1',employee1);
 app.use('/updateWithImage',updatewithemployeeprofile);
 app.use('/item',items);
+app.use('/item1',items1);
 app.use('/deleteallitem',deleteallitems);
 app.use('/stock',stock);
+app.use('/getstockbyin',getstockbyin);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

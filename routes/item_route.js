@@ -15,9 +15,9 @@ var storage = multer.diskStorage({
   });
   var upload = multer({storage: storage});
 
-  router.get('/:name?',function(req,res,next){
-      if(req.params.name){
-        item.getItemByName(req.params.name,function(err,rows){
+  router.get('/:id?',function(req,res,next){
+      if(req.params.id){
+        item.getItemByID(req.params.id,function(err,rows){
             if(err){
                 res.json(err);
             }
@@ -36,7 +36,6 @@ var storage = multer.diskStorage({
             }
         });
       }
-      
   });
 
 router.post('',upload.single('itemIMG'),function(req,res,next){
@@ -52,6 +51,16 @@ router.post('',upload.single('itemIMG'),function(req,res,next){
 
 router.delete('/:id',function(req,res,next){
     item.deleteItem(req.params.id,function(err,rows){
+        if(err){
+            res.json(err);
+        }
+        else{
+            res.json(rows);
+        }
+    });
+});
+router.put('',function(req,res,next){
+    item.updateItem(req.body,function(err,rows){
         if(err){
             res.json(err);
         }

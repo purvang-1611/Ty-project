@@ -3,7 +3,7 @@ var db=require('../db.connection');
 var item={
 
     getAllItems:function(callback){
-        return db.query("select i.*,c.categoryNAME from itemtbl i,categorytbl c where i.fkCategoryID=categoryID",callback);
+        return db.query("select i.*,c.categoryNAME from itemtbl i,categorytbl c where i.fkCategoryID=c.categoryID",callback);
     },
     addItems:function(item,filename,callback){
         return db.query("insert into itemtbl(itemNAME,itemPRICE,itemINGREDIENTS,itemIMG,fkCategoryID,itemPREPARETIME,itemTYPE) values(?,?,?,?,?,?,?)",[item.itemNAME,item.itemPRICE,item.itemINGREDIENTS,filename,item.fkCategoryID,item.itemPREPARETIME,item.itemTYPE],callback);
@@ -22,6 +22,18 @@ var item={
     },
     getItemByName(name,callback){
         return db.query("select * from itemtbl where itemNAME=?",[name],callback);
+    },
+    getItemByID(id,callback){
+        return db.query("select i.*,c.categoryNAME from itemtbl i,categorytbl c where i.fkCategoryID=c.categoryID and i.itemID=?",[id],callback);
+    },
+    updateItem(item,callback){
+        console.log(item);
+        return db.query("update itemtbl set itemNAME=?,itemPRICE=?,itemINGREDIENTS=?,itemTYPE=?,itemPREPARETIME=?,fkCategoryID=? where itemID=?",[item.itemNAME,item.itemPRICE,item.itemINGREDIENTS,item.itemTYPE,item.itemPREPARETIME,item.fkCategoryID,item.itemID],callback);
+
+    },
+    updateItemWithImage(item,filename,callback){
+        console.log(item);
+        return db.query("update itemtbl set itemNAME=?,itemIMG=?,itemPRICE=?,itemINGREDIENTS=?,itemTYPE=?,itemPREPARETIME=?,fkCategoryID=? where itemID=?",[item.itemNAME,filename,item.itemPRICE,item.itemINGREDIENTS,item.itemTYPE,item.itemPREPARETIME,item.fkCategoryID,item.itemID],callback);
     }
 };
 
